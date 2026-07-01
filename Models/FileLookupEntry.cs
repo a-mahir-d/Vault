@@ -17,11 +17,8 @@ public class FileLookupEntry
     [JsonPropertyName("mimeType")]
     public string MimeType { get; set; } = string.Empty;
     
-    [JsonPropertyName("encryptionKey")]
-    public string EncryptionKey { get; set; } = string.Empty;
-    
-    [JsonPropertyName("iv")]
-    public string Iv { get; set; } = string.Empty;
+    [JsonPropertyName("password")]
+    public string Password { get; set; } = string.Empty;
     
     [JsonPropertyName("createdAt")]
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

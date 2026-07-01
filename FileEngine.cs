@@ -68,11 +68,11 @@ public class FileEngine
         }
     }
     
-    public async Task DecryptAndExtractFilePayloadAsync(string fileName, string destinationPath, byte[] key, byte[] iv)
+    public async Task DecryptAndExtractFilePayloadAsync(string fileName, string destinationPath, string password)
     {
         var sourcePath = Path.Combine(GetVaultPath(VaultTypeFile), fileName);
         if (!File.Exists(sourcePath)) throw new FileNotFoundException("Şifreli kaynak dosya kasada bulunamadı.");
-        await CryptoEngine.DecryptFileStreamAsync(sourcePath, destinationPath, key, iv);
+        await CryptoEngine.DecryptFileAsync(sourcePath, destinationPath, password);
     }
 
     // CREATE
@@ -109,11 +109,11 @@ public class FileEngine
         }
     }
     
-    public async Task SaveEncryptedFilePayloadAsync(string sourcePath, string targetFileName, byte[] key, byte[] iv)
+    public async Task SaveEncryptedFilePayloadAsync(string sourcePath, string targetFileName, string password)
     {
         var vaultDir = GetVaultPath(VaultTypeFile);
         var destinationPath = Path.Combine(vaultDir, targetFileName);
-        await CryptoEngine.EncryptFileStreamAsync(sourcePath, destinationPath, key, iv);
+        await CryptoEngine.EncryptFileAsync(sourcePath, destinationPath, password);
     }
 
     // UPDATE

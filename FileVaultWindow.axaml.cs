@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security;
-using System.Security.Cryptography;
 using System.Text.Json;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
+using Vault.Helpers;
 using Vault.Models;
 
 namespace Vault;
@@ -89,14 +89,13 @@ public partial class FileVaultWindow : Window
             var originalName = fileInfo.Name;
             var fileSize = (ulong)fileInfo.Length;
             var mimeType = MimeTypeHelper.GetMimeType(originalName);
-            
-            var fileKey = RandomNumberGenerator.GetBytes(32);
-            var fileIv = RandomNumberGenerator.GetBytes(16);
+
+            var filePassword = CryptoHelper.GenerateSecurePassword();
             
             var nextId = _allEntries.Count > 0 ? _allEntries.Max(x => x.Id) + 1 : 1;
 
             var encryptedFileName = $"file_{nextId}.dat";
-            await _fileEngine.SaveEncryptedFilePayloadAsync(sourcePath, encryptedFileName, fileKey, fileIv);
+            await _fileEngine.SaveEncryptedFilePayloadAsync(sourcePath, encryptedFileName, filePassword);
 
             var newEntry = new FileLookupEntry
             {
@@ -104,8 +103,7 @@ public partial class FileVaultWindow : Window
                 OriginalName = originalName,
                 FileSize = fileSize,
                 MimeType = mimeType,
-                EncryptionKey = Convert.ToBase64String(fileKey),
-                Iv = Convert.ToBase64String(fileIv),
+                Password = filePassword,
                 CreatedAt = DateTime.UtcNow
             };
 
@@ -154,11 +152,10 @@ public partial class FileVaultWindow : Window
             LblProgress.Text = "İndiriliyor, lütfen bekleyin...";
 
             var encryptedFileName = $"file_{selectedEntry.Id}.dat";
+
+            var filePassword = selectedEntry.Password;
             
-            var keyBytes = Convert.FromBase64String(selectedEntry.EncryptionKey);
-            var ivBytes = Convert.FromBase64String(selectedEntry.Iv);
-            
-            await _fileEngine.DecryptAndExtractFilePayloadAsync(encryptedFileName, destinationPath, keyBytes, ivBytes);
+            await _fileEngine.DecryptAndExtractFilePayloadAsync(encryptedFileName, destinationPath, filePassword);
         }
         catch (Exception ex)
         {
