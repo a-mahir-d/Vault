@@ -1,0 +1,32 @@
+{
+    "GeneralSettings": {
+        "NetProjectPath": "Vault.csproj",
+        "ApplicationName": "Vault",
+        "Version": "1.0.0",
+        "PackageName": "com.amd.vault",
+        "AssemblyName": {
+            "$type": "msbuild",
+            "property": "AssemblyName"
+        }
+    },
+    "LinuxSettings": {
+        "InstallDirName": "vault",
+        "AppIcon": "vault.png",
+        "Maintainer": "Ahmet Mahir Demirelli \u003Ca.mahir.demirelli@gmail.com\u003E",
+        "CreateBinSymlink": "True",
+        "CopyrightFile": "COPYRIGHT.txt"
+    },
+    "Win32Settings": {
+        "IncludeUninstaller": "True"
+    },
+    "MacOsSettings": {
+        "CreateBundle": true,
+        "BundleIdentifier": "com.CompanyName.Vault",
+        "SigningCredentialsType": "AdHoc"
+    },
+    "PublishSettings": {
+        "Configuration": "Release",
+        "PublishSingleFile": "True",
+        "ExtraBuildProperties": {}
+    }
+}

@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="12.0.4"/>
+        <PackageReference Include="Avalonia.Desktop" Version="12.0.4"/>
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.4"/>
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="12.0.4"/>
+        <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.1">
+            <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+            <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.3.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="PasswordWindow.axaml.cs">
+        <DependentUpon>PasswordWindow.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="PasswordVaultWindow.axaml.cs">
+        <DependentUpon>PasswordVaultWindow.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="PasswordEditWindow.axaml.cs">
+        <DependentUpon>PasswordEditWindow.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="FileVaultWindow.axaml.cs">
+        <DependentUpon>FileVaultWindow.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="ChangeVaultPasswordWindow.axaml.cs">
+        <DependentUpon>ChangeVaultPasswordWindow.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
+</Project>
